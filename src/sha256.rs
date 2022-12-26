@@ -24,13 +24,13 @@ struct Sha256 {
 impl Sha256 {
     fn new() -> Self {
         Sha256 {
+            len: 0,
+            block_len: 0,
+            block: [0; BLOCK_SIZE],
             h: [
                 0x6a09e667, 0xbb67ae85, 0x3c6ef372, 0xa54ff53a, 0x510e527f, 0x9b05688c, 0x1f83d9ab,
                 0x5be0cd19,
             ],
-            len: 0,
-            block: [0; BLOCK_SIZE],
-            block_len: 0,
         }
     }
 
@@ -44,6 +44,7 @@ impl Sha256 {
                 self.block[i * 4 + 3],
             ]);
         }
+
         for i in 16..64 {
             let s0 = w[i - 15].rotate_right(7) ^ w[i - 15].rotate_right(18) ^ (w[i - 15] >> 3);
             let s1 = w[i - 2].rotate_right(17) ^ w[i - 2].rotate_right(19) ^ (w[i - 2] >> 10);
